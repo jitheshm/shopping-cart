@@ -1,0 +1,60 @@
+<section>
+  <div class="container">
+    
+
+    <table class="table">
+      <thead>
+        <tr>
+          <th scope="col">No</th>
+          <th scope="col">Image</th>
+          <th scope="col">Name</th>
+          
+          <th scope="col">Price</th>
+          <th scope="col">Quantity</th>
+          
+        </tr>
+      </thead>
+      <tbody>
+
+        {{#each products}}
+        <tr id="row-{{this.cartItems._id}}">
+          <th scope="row"> {{inc @index}} </th>
+         
+           <td> <img width="50px" , height="50px" src="/product-images/{{this.cartItems._id}}.jpg" alt=""> </td>
+          <td>{{this.cartItems.name}}</td>
+          
+          <td>{{this.cartItems.price}}</td>
+         
+         <td >
+
+          <div class="d-flex mb-3">
+          
+         
+          <button class="btn btn-primary me-3 " id="minus-btn-{{this.cartItems._id}}" onclick="quantityChange('{{this.cartItems._id}}',-1)" >-</button>
+         
+          <span id="quantity-{{this.cartItems._id}}">{{this.quantity}}</span> 
+            <button class=" btn btn-primary ms-3 " onclick="quantityChange('{{this.cartItems._id}}',1)"  > +</button>
+          </div>
+          </td>
+          <td>
+          
+          <button class="btn btn-danger", onclick="remove('{{this.cartItems._id}}')">Remove</button>
+          </td>
+         
+          
+        </tr>
+        {{/each}}
+      
+
+      </tbody>
+    </table>
+   <div class=" row " >
+    <h4  >Total Price: <span>{{total}}</span></h4>
+    
+   </div>
+    <div class="mt-5 float-end me-5">
+    <a href="" class="btn btn-success btn-lg  ">Place Order</a>
+    </div>
+  </div>
+
+</section>

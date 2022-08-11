@@ -1,0 +1,37 @@
+<section>
+  <div class="container">
+    <div class="float-end">
+      <a class="btn btn-success " , href="admin/add-product">Add product</a>
+    </div>
+
+    <table class="table">
+      <thead>
+        <tr>
+          <th scope="col">No</th>
+          <th scope="col">Name</th>
+          <th scope="col">Description</th>
+          <th scope="col">Price</th>
+          <th scope="col">Image</th>
+        </tr>
+      </thead>
+      <tbody>
+
+        {{#each products}}
+        <tr>
+          <th scope="row"> {{inc @index}} </th>
+          <td>{{this.name}}</td>
+          <td>{{this.description}}</td>
+          <td>{{this.price}}</td>
+          <td> <img width="50px" , height="50px" src="/product-images/{{this._id}}.jpg" alt=""> </td>
+          <td>
+            <a href="admin/edit_product?id={{this._id}}" class="btn btn-info">Edit</a>
+            <a href="admin/delete_product?id={{this._id}}" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete it?')">Delete</a>
+          </td>
+        </tr>
+        {{/each}}
+
+      </tbody>
+    </table>
+  </div>
+
+</section>

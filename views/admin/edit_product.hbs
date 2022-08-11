@@ -1,0 +1,43 @@
+<div class="container">
+    <div class="row">
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+            <form action="/admin/update-product?id={{product._id}}" method="post" role="form" enctype="multipart/form-data">
+                <legend>Edit product details</legend>
+
+                <div class="form-group">
+                    <label for="name"> Name</label>
+                    <input type="text" class="form-control" name="name" id="_name" placeholder="Name" value="{{product.name}}">
+                </div>
+
+                <div class="form-group">
+                    <label for="last_name">category</label>
+                    <input type="text" class="form-control" name="category" id="category" placeholder="category" value="{{product.category}}">
+                </div>
+
+                <div class="form-group">
+                    <label for="email">description</label>
+                    <input type="text" class="form-control" name="description" id="description" placeholder="text" value="{{product.description}}">
+                </div>
+
+                <div class="form-group">
+                    <label for="pw">Price</label>
+                    <input type="number" class="form-control" name="price" id="price" value="{{product.price}}">
+                </div>
+
+                <div class="form-group">
+                    <label for="pw_confirm">Image</label>
+                    <img src="/product-images/{{product._id}}.jpg" alt=""  id="display">
+                    <input type="file" class="form-control" name="image" id="image" onchange="imagechange()">
+                </div>
+
+                <button type="submit" class="btn btn-primary">Update</button>
+            </form>
+        </div>
+    </div>
+</div>
+<script>
+    function imagechange(){
+        document.getElementById('display').src=URL.createObjectURL(event.target.files[0])
+    }
+    
+</script>

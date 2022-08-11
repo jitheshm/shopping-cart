@@ -1,0 +1,52 @@
+<section style="background-color: #eee;">
+  <div class="container py-5">
+    <div class="row justify-content-center">
+        {{#each products}}
+      <div class="col-md-8 col-lg-6 col-xl-4">
+        <div class="card" style="border-radius: 15px;">
+          <div class="bg-image hover-overlay ripple ripple-surface ripple-surface-light"
+            data-mdb-ripple-color="light">
+            <img src="/product-images/{{this._id}}.jpg"
+              style="border-top-left-radius: 15px; border-top-right-radius: 15px;" class="img-fluid"
+              alt="Laptop" />
+            
+          </div>
+          <div class="card-body pb-0">
+            <div class="d-flex justify-content-between">
+              <div>
+                <p><a href="#!" class="text-dark">{{this.name}}</a></p>
+                <p class="small text-muted">{{this.category}}</p>
+              </div>
+              <div>
+                <div class="d-flex flex-row justify-content-end mt-1 mb-4 text-danger">
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                </div>
+                <p class="small text-muted">Rated 4.0/5</p>
+              </div>
+            </div>
+          </div>
+          <hr class="my-0" />
+          <div class="card-body pb-0">
+            <div class="d-flex justify-content-between">
+              <p  class="text-dark"> $ {{this.price}}</p>
+              
+            </div>
+            
+          </div>
+          <hr class="my-0" />
+          <div class="card-body">
+            <div class="d-flex justify-content-between align-items-center pb-2 mb-1">
+               {{!-- <a href="/add-to-cart?id={{this._id}}" class="btn btn btn-primary">Add to cart</a> --}}
+               <button class="btn btn btn-primary" onclick="addCart('{{this._id}}','{{this.price}}')">Add to cart</button>
+             
+            </div>
+          </div>
+        </div>
+      </div>
+      {{/each}}
+    </div>
+  </div>
+</section>

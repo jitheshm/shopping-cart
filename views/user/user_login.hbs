@@ -1,0 +1,43 @@
+<section>
+  <div class=" d-flex align-items-center justify-content-center mt-3">
+    <form class="col-md-3 mt-3 " action="/login" method="post">
+    {{#if loginError}}
+    <h1>{{loginError}}</h1>
+    {{/if}}
+      <!-- Email input -->
+      <div class="form-outline mb-4 ">
+        <input type="email" name="Email" id="Email" class="form-control" />
+        <label class="form-label" for="Email">Email address</label>
+      </div>
+
+      <!-- Password input -->
+      <div class="form-outline mb-4">
+        <input type="password" name="Password" id="Password" class="form-control" />
+        <label class="form-label" for="Password">Password</label>
+      </div>
+
+      <!-- 2 column grid layout for inline styling -->
+      <div class="row mb-4">
+        <div class="col d-flex justify-content-center">
+          <button type="submit" class="btn btn-primary btn-block mb-4">Sign in</button>
+        </div>
+
+        <div class="col">
+          <!-- Simple link -->
+          <a href="#!">Forgot password?</a>
+        </div>
+      </div>
+
+      <!-- Submit button -->
+
+
+      <!-- Register buttons -->
+      <div class="text-center">
+        <p>Not a member? <a href="/signup">Register</a></p>
+
+
+
+      </div>
+    </form>
+  </div>
+</section>
