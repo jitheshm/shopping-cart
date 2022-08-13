@@ -27,7 +27,7 @@ function addCart(proId,price){
 
 
 
-function quantityChange(proId,val){
+function quantityChange(proId,val,price){
     //console.log(proId);
    
 $.ajax({
@@ -50,18 +50,29 @@ $.ajax({
         
         
         }
-        
         $("#quantity-"+proId).html(count)
+        total=$("#total-price").html()
+        if(val===1){
+        
+        total=parseInt(total)+price
+        }
+        else{
+            total=parseInt(total)-price
+        }
+        $("#total-price").html(total)
+
+
     }
 
     }
 })
 }
 
-function remove(proId){
+function  remove (proId,price){
     //console.log("here")
     if(confirm("Are you sure"))
     {
+        quantity = $("#quantity-"+proId).html()
 $.ajax({
     
     url:"/remove?id="+proId ,
@@ -69,6 +80,12 @@ $.ajax({
     success:(res)=>{
         if(res.success){
         $("#row-"+proId).remove()
+        total=$("#total-price").html()
+        
+       
+        total=parseInt(total)-(parseInt(quantity)*parseInt(price))
+        
+        $("#total-price").html(total)
         }
 
 

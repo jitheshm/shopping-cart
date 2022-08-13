@@ -30,15 +30,15 @@
           <div class="d-flex mb-3">
           
          
-          <button class="btn btn-primary me-3 " id="minus-btn-{{this.cartItems._id}}" onclick="quantityChange('{{this.cartItems._id}}',-1)" >-</button>
+          <button class="btn btn-primary me-3 " id="minus-btn-{{this.cartItems._id}}" onclick="quantityChange('{{this.cartItems._id}}',-1,{{this.cartItems.price}})" >-</button>
          
           <span id="quantity-{{this.cartItems._id}}">{{this.quantity}}</span> 
-            <button class=" btn btn-primary ms-3 " onclick="quantityChange('{{this.cartItems._id}}',1)"  > +</button>
+            <button class=" btn btn-primary ms-3 " onclick="quantityChange('{{this.cartItems._id}}',1,{{this.cartItems.price}})"  > +</button>
           </div>
           </td>
           <td>
           
-          <button class="btn btn-danger", onclick="remove('{{this.cartItems._id}}')">Remove</button>
+          <button class="btn btn-danger", onclick="remove('{{this.cartItems._id}}',{{this.cartItems.price}})">Remove</button>
           </td>
          
           
@@ -49,7 +49,7 @@
       </tbody>
     </table>
    <div class=" row " >
-    <h4  >Total Price: <span>{{total}}</span></h4>
+    <h4  >Total Price: <span id="total-price">{{total}}</span></h4>
     
    </div>
     <div class="mt-5 float-end me-5">
