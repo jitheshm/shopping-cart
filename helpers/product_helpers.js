@@ -216,5 +216,14 @@ module.exports = {
                 })
         })
 
+    },
+    getProductList:(userId)=>{
+        return new Promise ((resolve,reject)=>{
+        db.get().collection(dbcollections.cartCollection).findOne({userId:ObjectId(userId)}).then((res)=>{
+            resolve(res)
+
+        })
+
+    })
     }
 }

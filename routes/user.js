@@ -1,9 +1,9 @@
 var express = require('express');
 const { Db } = require('mongodb');
-const product_helpers = require('../helpers/product_helpers');
+
 var router = express.Router();
 var productHelper = require('../helpers/product_helpers');
-const user_helper = require('../helpers/user_helper');
+
 var userHelper = require('../helpers/user_helper')
 const verifyLogin = (req, res, next) => {
   if (req.session.status) {
@@ -80,7 +80,8 @@ router.post('/login', (req, res) => {
 })
 router.get('/cart', verifyLogin, (req, res) => {
   let user = req.session.user
-  product_helpers.viewCart(user).then((products) => {
+  productHelper.viewCart(user).then((products) => {
+    console.log(products);
     if (products) {
       let total=products.reduce((n, {totalPrice}) => n + totalPrice, 0)
       
@@ -110,8 +111,8 @@ router.post('/add-to-cart', verifyLogin, (req, res) => {
   })
 })
 
-router.get('/quantity-change',(req,res)=>{
-  console.log(req.query);
+router.get('/quantity-change',verifyLogin,(req,res)=>{
+  console.log(req.session.user._id);
   
   proId=req.query.id
   val=req.query.val
@@ -128,6 +129,40 @@ router.get('/remove',(req,res)=>{
     res.json({success:true})
 
   })
+})
+
+router.get('/place-order',verifyLogin,(req,res)=>{
+  let user = req.session.user
+  
+  productHelper.viewCart(user).then((products) => {
+    
+    if (products) {
+      let total=products.reduce((n, {totalPrice}) => n + totalPrice, 0)
+      if(total!=0)
+      {
+        res.render('user/place_order', { user,total})
+
+      }
+      
+      
+    }
+})
+})
+
+router.post('/make-purchase',(req,res)=>{
+  productHelper.getProductList(req.body.userId).then((cartDetails)=>{
+    userHelper.orderPlaced(req.body,cartDetails).then(()=>{
+      console.log("order placed successfully");
+      res.json({success:true})
+
+    })
+
+  })
+
+
+  console.log(req.body);
+  
+  
 })
 
 

@@ -1,3 +1,5 @@
+
+
 function addCart(proId,price){
     $.ajax({
         url:"/add-to-cart",
@@ -93,3 +95,23 @@ $.ajax({
     }
 })}
 }
+$("#checkout-form").submit((e)=>{
+    e.preventDefault()
+    data=$("#checkout-form").serializeArray()
+    total=$("#total-field").html()
+    data.push({name: "Total", value:total });
+    
+    $.ajax({
+        url:"/make-purchase",
+        method:'post',
+        data:data,
+       
+        
+        success:(response)=>{
+           window.location='/cart'
+        }
+        
+
+        
+    })
+})

@@ -2,6 +2,7 @@ var db = require('../config/connection')
 var dbcollections = require('../config/collection_names')
 const bcrypt = require('bcrypt')
 const { promise, reject } = require('bcrypt/promises')
+const { ObjectID } = require('bson')
 module.exports = {
     doSignup: (userData) => {
         return new Promise(async (resolve, reject) => {
@@ -40,6 +41,40 @@ module.exports = {
 
 
 
+    },
+    orderPlaced:(formData,cartDetails)=>{
+        return new Promise((resolve,reject)=>{
+
+        
+        let status=formData.payment_method==='COD'?'placed':'pending';
+        
+        
+        obj={
+            userId:ObjectID(formData.userId) ,
+            deliveryDetails:{
+                Address:formData.Address,
+                Pincode:formData.Pincode,
+                Phone:formData.phone
+            },
+            Payment_method:formData.payment_method,
+            Total:formData.Total,
+            Products:cartDetails.products,
+            Status:status
+
+            
+
+        }
+        db.get().collection(dbcollections.orderCollection).insertOne(obj).then((res)=>{
+            db.get().collection(dbcollections.cartCollection).deleteOne({userId:ObjectID(formData.userId)}).then(()=>{
+                resolve()
+            })
+            
+
+        })
+    })
+        
+
     }
+
    
 }
