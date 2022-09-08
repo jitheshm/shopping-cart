@@ -48,10 +48,13 @@ router.get('/delete_product',(req,res)=>{
  })
  router.post('/update-product',(req,res)=>{
    productHelper.updateProduct(req.body,req.query).then(()=>{
+    if(req.files)
+    {
     var image = req.files.image
     id=req.query 
    // console.log(id);
     image.mv('./public/product-images/' + ObjectId(id)+ '.jpg')
+    }
      console.log("update sucessfully")
      res.redirect('/admin')
    })

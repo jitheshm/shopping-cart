@@ -3,6 +3,14 @@ var dbcollections = require('../config/collection_names')
 const bcrypt = require('bcrypt')
 const { promise, reject } = require('bcrypt/promises')
 const { ObjectID } = require('bson')
+const Razorpay=require('razorpay');
+const razorpayUtils = require('razorpay/dist/utils/razorpay-utils')
+
+var instance = new Razorpay({
+    key_id: 'rzp_test_qYQ213WoR7N8Rb',
+    key_secret: 't3BLOvWzanx9QmJLaMr8EfGd',
+  });
+
 module.exports = {
     doSignup: (userData) => {
         return new Promise(async (resolve, reject) => {
@@ -66,13 +74,65 @@ module.exports = {
         }
         db.get().collection(dbcollections.orderCollection).insertOne(obj).then((res)=>{
             db.get().collection(dbcollections.cartCollection).deleteOne({userId:ObjectID(formData.userId)}).then(()=>{
-                resolve()
+                resolve(res)
             })
             
 
         })
     })
         
+
+    },
+    generateRazorpay:(orderId,total)=>{
+        return new Promise((resolve,reject)=>{
+            console.log("orderid"+orderId);
+        
+            var options = {
+                amount: total*100,  // amount in the smallest currency unit
+                currency: "INR",
+                receipt: ""+orderId
+              };
+              instance.orders.create(options, function(err, order) {
+                if(err)
+                {
+                    
+                    console.log("error:",err);
+                }
+                console.log("order",order);
+                
+                resolve(order)
+                
+              });
+        })
+      
+    },
+    verifyPayment:(details)=>{
+        return new Promise((resolve,reject)=>{
+            var { validatePaymentVerification } = razorpayUtils
+
+           let result=validatePaymentVerification({"order_id": details['payment[razorpay_order_id]'], "payment_id": details['payment[razorpay_payment_id]'] }, details['payment[razorpay_signature]'], 't3BLOvWzanx9QmJLaMr8EfGd');
+           //console.log('result',result);
+           if(result)
+           {
+            resolve()
+           }
+           else{
+           
+            reject()
+           }
+        })
+
+    },
+    changePaymentStatus:(orderId)=>{
+        return new Promise((resolve,reject)=>{
+            db.get().collection(dbcollections.orderCollection).updateOne({_id:ObjectID(orderId)},{
+                $set:{
+                    status:"placed"
+                }
+            }).then(()=>{
+                resolve()
+            })
+        })
 
     }
 

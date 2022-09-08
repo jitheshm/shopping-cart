@@ -108,10 +108,79 @@ $("#checkout-form").submit((e)=>{
        
         
         success:(response)=>{
-           window.location='/cart'
+            if(response.success)
+            {
+                window.location='/cart'
+            }
+            else{
+                //console.log(response.userName);
+                razorpayPayment(response);
+            }
+           
         }
         
 
         
     })
 })
+function razorpayPayment(res){
+   
+    var options = {
+        "key": "rzp_test_qYQ213WoR7N8Rb", // Enter the Key ID generated from the Dashboard
+        "amount": res.order.amount, // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
+        "currency": "INR",
+        "name": "Jithesh",
+        "description": "Test Transaction",
+        "image": "https://example.com/your_logo",
+        "order_id": res.order.id, //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
+        "handler": function (response){
+            // alert(response.razorpay_payment_id);
+            // alert(response.razorpay_order_id);
+            // alert(response.razorpay_signature)
+            verifyPayment(response,res.order)
+        },
+        "prefill": {
+            "name": res.userName,
+            "email": res.userEmail,
+            "contact": res.userMobile
+        },
+        "notes": {
+            "address": "Razorpay Corporate Office"
+        },
+        "theme": {
+            "color": "#3399cc"
+        }
+    };
+    var rzp1 = new Razorpay(options);
+rzp1.on('payment.failed', function (response){
+       // alert(response.error.code);
+        //alert(response.error.description);
+        //alert(response.error.source);
+        //alert(response.error.step);
+        //alert(response.error.reason);
+       // alert(response.error.metadata.order_id);
+       // alert(response.error.metadata.payment_id);
+        
+});
+rzp1.open();
+}
+function verifyPayment(payment,order){
+    $.ajax({
+        url:'/verify-payment',
+        data:{
+            payment,
+            order
+        },
+        method:'post',
+        success:(response)=>{
+            if(response.success){
+                alert(response.msg);
+            }
+            else{
+                alert(response.errMsg);
+            }
+
+        }
+    })
+
+}

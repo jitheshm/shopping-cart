@@ -1,10 +1,14 @@
 var express = require('express');
 const { Db } = require('mongodb');
 
+
 var router = express.Router();
 var productHelper = require('../helpers/product_helpers');
 
 var userHelper = require('../helpers/user_helper')
+
+
+
 const verifyLogin = (req, res, next) => {
   if (req.session.status) {
     next()
@@ -151,18 +155,49 @@ router.get('/place-order',verifyLogin,(req,res)=>{
 
 router.post('/make-purchase',(req,res)=>{
   productHelper.getProductList(req.body.userId).then((cartDetails)=>{
-    userHelper.orderPlaced(req.body,cartDetails).then(()=>{
+    userHelper.orderPlaced(req.body,cartDetails).then((response)=>{
+      if(req.body.payment_method==='COD')
+      {
+        
       console.log("order placed successfully");
       res.json({success:true})
+      }
+      else if(req.body.payment_method==='Online'){
+        userHelper.generateRazorpay(response.insertedId,req.body.Total).then((order)=>{
+          userName=req.session.user.Name
+          userEmail=req.session.user.Email
+          userMobile=req.body.phone
+          res.json({order,userName,userEmail,userMobile})
+
+        })
+      }
 
     })
 
   })
 
 
+  
+  
+  
+})
+
+router.post('/verify-payment',(req,res)=>{
+userHelper.verifyPayment(req.body).then(()=>{
   console.log(req.body);
+  userHelper.changePaymentStatus(req.body['order[receipt]']).then(()=>{
+    res.json({success:true,msg:"Payment successfull"})
+  })
+
+
+}).catch(()=>{
+  res.json({success:false,errMsg:"payment verification failed"})
+
+
   
-  
+})
+
+  console.log(req.body);
 })
 
 
