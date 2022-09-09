@@ -174,7 +174,12 @@ function verifyPayment(payment,order){
         method:'post',
         success:(response)=>{
             if(response.success){
-                alert(response.msg);
+                //alert(response.msg);
+                $('#billing').hide();
+                $('#successmsg').html(response.msg);
+                $('#successfull_page').removeAttr('hidden');
+
+                
             }
             else{
                 alert(response.errMsg);

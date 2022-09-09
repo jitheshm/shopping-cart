@@ -187,6 +187,7 @@ userHelper.verifyPayment(req.body).then(()=>{
   console.log(req.body);
   userHelper.changePaymentStatus(req.body['order[receipt]']).then(()=>{
     res.json({success:true,msg:"Payment successfull"})
+    
   })
 
 
