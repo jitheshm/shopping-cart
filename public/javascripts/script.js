@@ -160,6 +160,10 @@ rzp1.on('payment.failed', function (response){
         //alert(response.error.reason);
        // alert(response.error.metadata.order_id);
        // alert(response.error.metadata.payment_id);
+       $('#billing').hide();
+       $('#successfull_page').attr("hidden",true);
+       $('#errormsg').html(response.error.reason);
+       $('#payment_failed').removeAttr('hidden');
         
 });
 rzp1.open();
@@ -176,13 +180,19 @@ function verifyPayment(payment,order){
             if(response.success){
                 //alert(response.msg);
                 $('#billing').hide();
+                $('#payment_failed').attr("hidden",true);
                 $('#successmsg').html(response.msg);
                 $('#successfull_page').removeAttr('hidden');
 
                 
             }
             else{
-                alert(response.errMsg);
+                $('#billing').hide();
+                $('#successfull_page').attr("hidden",true);
+                $('#errormsg').html(response.errMsg);
+
+                $('#payment_failed').removeAttr('hidden');
+                // alert(response.errMsg);
             }
 
         }
