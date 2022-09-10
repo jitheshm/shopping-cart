@@ -202,7 +202,15 @@ userHelper.verifyPayment(req.body).then(()=>{
 })
 
 
+router.get('/orders',(req,res)=>{
+  user=req.session.user
+  userHelper.ordersList(req.session.user._id).then((ordersList)=>{
+    console.log(ordersList);
+    res.render('user/orders',{ordersList,user})
 
+  })
+
+})
 
 
 

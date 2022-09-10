@@ -1,4 +1,8 @@
 
+$(document).ready( function () {
+    $('#orderslist').DataTable();
+} );
+
 
 function addCart(proId,price){
     $.ajax({

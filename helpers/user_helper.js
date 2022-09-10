@@ -58,6 +58,7 @@ module.exports = {
         
         
         obj={
+            Date:new Date().toLocaleString('en-US', {timeZone: 'Asia/Kolkata'}),
             userId:ObjectID(formData.userId) ,
             deliveryDetails:{
                 Address:formData.Address,
@@ -72,6 +73,7 @@ module.exports = {
             
 
         }
+        console.log(obj);
         db.get().collection(dbcollections.orderCollection).insertOne(obj).then((res)=>{
             db.get().collection(dbcollections.cartCollection).deleteOne({userId:ObjectID(formData.userId)}).then(()=>{
                 resolve(res)
@@ -133,6 +135,31 @@ module.exports = {
                 resolve()
             })
         })
+
+    },
+    ordersList:(userId)=>{
+       return new Promise(async(resolve,reject)=>{
+       result= await db.get().collection(dbcollections.orderCollection).aggregate([
+        {
+            $match: { userId: ObjectID(userId) }
+         },
+         {
+            $project:{
+                Date:1,
+                userId:1,
+                deliveryDetails:1,
+                Payment_method:1,
+                Total:1,
+                Products:1,
+                Status:1,
+                count: {    $size: "$Products" } 
+                
+            }
+         }
+       ]).toArray()
+       resolve(result)
+       
+       })
 
     }
 

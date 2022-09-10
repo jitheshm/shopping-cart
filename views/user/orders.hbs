@@ -1,0 +1,56 @@
+<section>
+  <div class="container">
+    
+
+    <table class="display" id="orderslist">
+      <thead>
+        <tr>
+          <th scope="col">No</th>
+          <th scope="col">Date</th>
+          <th scope="col">Order</th>
+          
+          
+          <th scope="col">Products</th>
+          <th scope="col">Payment Method</th>
+          <th scope="col">Status</th>
+          <th scope="col">Amount</th>
+          
+          
+        </tr>
+      </thead>
+     <tbody>
+      {{#each ordersList}}
+      <tr>
+        <td>{{inc @index}}</td>
+        <td>{{this.Date}}</td>
+        <td>{{this._id}}</td>
+        <td>
+        {{#each Products}}
+        
+        {{#if @first}}
+        
+        <img width="50px" , height="50px" src="/product-images/{{this.proId}}.jpg" alt="">
+        {{this.proId}}
+        
+        {{else}}
+        <br>
+        <img width="50px" , height="50px" src="/product-images/{{this.proId}}.jpg" alt="">
+        {{this.proId}}
+
+        {{/if}}
+        
+        
+        {{/each}}
+        </td>
+        
+         <td>{{this.Payment_method}}</td>
+         <td>{{this.Status}}</td>
+         <td>{{this.Total}}</td>
+
+      </tr>
+      {{/each}}
+     </tbody>
+    </table>
+  </div>
+
+</section>
