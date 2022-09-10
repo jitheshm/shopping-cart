@@ -1,6 +1,7 @@
 
 $(document).ready( function () {
     $('#orderslist').DataTable();
+    $('#admin_landingpage').DataTable();
 } );
 
 
