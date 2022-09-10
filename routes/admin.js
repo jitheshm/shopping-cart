@@ -19,19 +19,21 @@ router.get('/add-product', (req, res) => {
 
 })
 router.post('/add-product', (req, res) => {
-  if (req.files.image != null) {
+  
 
 
     productHelper.addProduct(req.body, (id) => {
+      if(req.files){
       var image = req.files.image
       image.mv('./public/product-images/' + id + '.jpg', (err, done) => {
         if (err)
           console.log(err);
-        else
+        })}
+        
           res.render('admin/add_product', { admin: true })
-      })
+      
     })
-  }
+  
 })
 router.get('/delete_product',(req,res)=>{
   productHelper.deleteProduct(req.query).then((response)=>{
