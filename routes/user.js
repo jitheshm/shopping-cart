@@ -10,7 +10,7 @@ var userHelper = require('../helpers/user_helper')
 
 
 const verifyLogin = (req, res, next) => {
-  if (req.session.status) {
+  if (req.session.userStatus) {
     next()
   }
   else {
@@ -49,13 +49,13 @@ router.post('/signup', (req, res) => {
   })
 })
 router.get('/login', (req, res) => {
-  if (req.session.status)
+  if (req.session.userStatus)
     res.redirect('/')
   else {
-    if (req.session.loginError)
+    if (req.session.userLoginError)
       var loginError = "invalid username or password"
     res.render('user/user_login', { loginError })
-    req.session.loginError = false
+    req.session.userLoginError = false
 
 
   }
@@ -63,7 +63,7 @@ router.get('/login', (req, res) => {
 
 })
 router.get('/logout', (req, res) => {
-  req.session.destroy();
+  req.session.user=null;
   res.redirect('/login')
 })
 
@@ -71,11 +71,11 @@ router.post('/login', (req, res) => {
   userHelper.doLogin(req.body).then((response) => {
     if (response.status) {
       req.session.user = response.user
-      req.session.status = response.status
+      req.session.userStatus = response.status
       res.redirect('/')
 
     } else {
-      req.session.loginError = true
+      req.session.userLoginError = true
       res.redirect('/login')
     }
 
