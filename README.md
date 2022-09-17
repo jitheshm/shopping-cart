@@ -1,1 +1,1 @@
-This is a nodejs shopping cart project
+This is a nodejs shopping cart project.
