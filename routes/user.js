@@ -64,6 +64,7 @@ router.get('/login', (req, res) => {
 })
 router.get('/logout', (req, res) => {
   req.session.user=null;
+  req.session.userStatus=false;
   res.redirect('/login')
 })
 
