@@ -2,6 +2,7 @@ var express = require('express');
 const { ObjectId } = require('mongodb');
 var router = express.Router();
 var productHelper = require('../helpers/product_helpers')
+var adminHelper = require('../helpers/admin_helpers')
 
 /* GET users listing. */
 router.get('/', function (req, res, next) {
@@ -62,5 +63,47 @@ router.get('/delete_product',(req,res)=>{
    })
 
  })
+
+ router.get('/orders-pending',(req,res)=>{
+  adminHelper.pendingDelivery().then((orders)=>{
+    res.render('admin/orders_list',{orders ,admin: true})
+    
+  })
+  
+    
+
+})
+router.get('/product-shipped',(req,res)=>{
+  orderId=ObjectId(req.query.id) 
+  
+  console.log(orderId);
+  adminHelper.changeDeliveryStatus(orderId,"Shipped").then(()=>{
+    res.json({success:true})
+
+  })
+})
+router.get('/orders-processing',(req,res)=>{
+  adminHelper.shippedProducts().then((orders)=>{
+    res.render('admin/orders_list',{orders,admin: true})
+    
+  })
+  
+    
+
+})
+router.get('/product-delivered',(req,res)=>{
+  orderId=ObjectId(req.query.id) 
+  console.log(orderId);
+  adminHelper.changeDeliveryStatus(orderId,"Delivered").then(()=>{
+    res.json({success:true})
+
+  })
+})
+router.get('/delivered-products',(req,res)=>{
+  adminHelper.deliveredProducts().then((orders)=>{
+    res.render('admin/orders_list',{orders,admin: true})
+
+  })
+})
 
 module.exports = router;

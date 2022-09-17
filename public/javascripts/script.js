@@ -204,3 +204,34 @@ function verifyPayment(payment,order){
     })
 
 }
+function productShip(orderId){
+
+$.ajax({
+    url:'/admin/product-shipped?id='+orderId ,
+    type:'GET',
+    success:(res)=>{
+        if(res.success){
+            $('#deliveryStatus'+orderId).html('Shipped')
+            $('#shipbtn'+orderId).attr("hidden",true)
+        }
+
+    }
+})
+
+}
+
+function productDelivery(orderId){
+
+    $.ajax({
+        url:'/admin/product-delivered?id='+orderId ,
+        type:'GET',
+        success:(res)=>{
+            if(res.success){
+                $('#deliveryStatus'+orderId).html('Delivered')
+                $('#deliverybtn'+orderId).attr("hidden",true)
+            }
+    
+        }
+    })
+    
+    }

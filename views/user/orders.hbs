@@ -2,18 +2,19 @@
   <div class="container">
     
 
-    <table class="display" id="orderslist">
+    <table class="display " id="orderslist">
       <thead>
         <tr>
           <th scope="col">No</th>
           <th scope="col">Date</th>
-          <th scope="col">Order</th>
+          <th scope="col">Order Id</th>
           
           
           <th scope="col">Products</th>
           <th scope="col">Payment Method</th>
-          <th scope="col">Status</th>
+          <th scope="col">Order Status</th>
           <th scope="col">Amount</th>
+          <th scope="col">Delivery Status</th>
           
           
         </tr>
@@ -25,17 +26,18 @@
         <td>{{this.Date}}</td>
         <td>{{this._id}}</td>
         <td>
-        {{#each Products}}
+        {{#each proList}}
         
         {{#if @first}}
         
-        <img width="50px" , height="50px" src="/product-images/{{this.proId}}.jpg" alt="">
-        {{this.proId}}
+        <img width="50px" , height="50px" src="/product-images/{{this._id}}.jpg" alt="">
+        <div>{{this.name}}</div>
+        
         
         {{else}}
         <br>
-        <img width="50px" , height="50px" src="/product-images/{{this.proId}}.jpg" alt="">
-        {{this.proId}}
+        <img width="50px" , height="50px" src="/product-images/{{this._id}}.jpg" alt="">
+        <div>{{this.name}}</div>
 
         {{/if}}
         
@@ -44,11 +46,13 @@
         </td>
         
          <td>{{this.Payment_method}}</td>
-         <td>{{this.Status}}</td>
+         <td>{{this.Order_Status}}</td>
          <td>{{this.Total}}</td>
+         <td>{{this.Delivery_Status}}</td>
 
       </tr>
       {{/each}}
+      
      </tbody>
     </table>
   </div>

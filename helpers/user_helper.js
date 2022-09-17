@@ -68,7 +68,9 @@ module.exports = {
             Payment_method:formData.payment_method,
             Total:formData.Total,
             Products:cartDetails.products,
-            Status:status
+            Order_Status:status,
+            Delivery_Status:"Not Shipped"
+            
 
             
 
@@ -144,19 +146,31 @@ module.exports = {
             $match: { userId: ObjectID(userId) }
          },
          {
+            $lookup:{
+                from:dbcollections.productCollection ,
+                localField: "Products.proId",
+                foreignField: "_id",
+                as: "proList"
+
+            }
+         },
+         
+         {
             $project:{
                 Date:1,
                 userId:1,
                 deliveryDetails:1,
                 Payment_method:1,
                 Total:1,
-                Products:1,
-                Status:1,
-                count: {    $size: "$Products" } 
-                
+                Order_Status:1,
+                Delivery_Status:1,
+                proList:1
             }
          }
+        
+         
        ]).toArray()
+       console.log(result);
        resolve(result)
        
        })

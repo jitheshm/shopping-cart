@@ -1,0 +1,60 @@
+<section>
+  <div class="container">
+    
+
+    <table class="display " id="orderslist">
+      <thead>
+        <tr>
+          <th scope="col">No</th>
+          <th scope="col">Date</th>
+          <th scope="col">Order Id</th>
+          <th scope="col">User Id</th>
+          
+         
+          <th scope="col">Amount</th>
+          <th scope="col">Payment Method</th>
+          <th scope="col">Order Status</th>
+          
+          <th scope="col">Delivery Status</th>
+         
+         
+          <th scope="col">Action</th>
+          
+          
+          
+          
+        </tr>
+      </thead>
+     <tbody>
+      {{#each orders}}
+      <tr>
+        <td>{{inc @index}}</td>
+        <td>{{this.Date}}</td>
+        <td>{{this._id}}</td>
+        <td>{{this.userId}}</td>
+        <td>{{this.Total}}</td>
+         <td>{{this.Payment_method}}</td>
+         <td>{{this.Order_Status}}</td>
+         
+         <td id="deliveryStatus{{this._id}}" >{{this.Delivery_Status}}</td>
+         <td>
+          {{#if (eq this.Order_Status 'placed')}}
+          {{#if (eq this.Delivery_Status 'Not Shipped')}}
+          
+          <button id="shipbtn{{this._id}}" class="btn btn-success" onclick="productShip('{{this._id}}')">ship</button>
+          {{else}}
+          {{#if (eq this.Delivery_Status 'Shipped')}}
+          <button id="deliverybtn{{this._id}}" class="btn btn-success" onclick="productDelivery('{{this._id}}')">Delivery</button>
+          {{/if}}
+          {{/if}}
+          {{/if}}
+         </td>
+
+      </tr>
+      {{/each}}
+      
+     </tbody>
+    </table>
+  </div>
+
+</section>

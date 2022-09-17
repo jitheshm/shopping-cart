@@ -6,8 +6,9 @@ var logger = require('morgan');
 var hbs = require('express-handlebars')
 var fileUpload = require('express-fileupload');
 var session = require('express-session');
-
- 
+const Handlebars = require('handlebars');
+const H = require('just-handlebars-helpers');
+H.registerHelpers(Handlebars);
 
 
 
