@@ -25,10 +25,16 @@
                                 <a class="dropdown-toggle" aria-expanded="false" data-bs-toggle="dropdown" href="#">
                                     <i class="fas fa-user-circle fs-2" style="color: var(--bs-gray-900);"></i></a>
                                 <div class="dropdown-menu">
-                                    <a class="dropdown-item" href="#">Profile</a>
+                                    {{#if adminData}}
+                                    <a class="dropdown-item" href="#">{{adminData}}</a>
+                                    <a class="dropdown-item" href="/admin/logout">Logout</a></div>
+                                    {{else}}
                                     
-                                    <a class="dropdown-item" href="#">Login</a>
-                                    <a class="dropdown-item" href="#">Logout</a></div>
+                                    <a class="dropdown-item" href="/admin/login">Login</a>
+                                    {{/if}}
+                                    
+                                    
+                                    
                             </div>
                         </div>
                     </div>
