@@ -214,6 +214,9 @@ $.ajax({
             $('#deliveryStatus'+orderId).html('Shipped')
             $('#shipbtn'+orderId).attr("hidden",true)
         }
+        else{
+            window.location="/admin/login"
+        }
 
     }
 })
@@ -229,6 +232,9 @@ function productDelivery(orderId){
             if(res.success){
                 $('#deliveryStatus'+orderId).html('Delivered')
                 $('#deliverybtn'+orderId).attr("hidden",true)
+            }
+            else{
+                window.location="/admin/login"
             }
     
         }
