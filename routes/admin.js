@@ -17,7 +17,7 @@ const verifyLogin = (req, res, next) => {
 /* GET users listing. */
 router.get('/', verifyLogin, function (req, res, next) {
   productHelper.getAllProduct().then((products) => {
-    if(req.session.admin)
+    
       var adminData=req.session.admin.username
     res.render('admin/admin_landing_page', { products, admin: true,adminData })
   })
@@ -28,13 +28,15 @@ router.get('/', verifyLogin, function (req, res, next) {
 });
 
 router.get('/add-product',verifyLogin, (req, res) => {
-  res.render('admin/add_product', { admin: true })
+ 
+      var adminData=req.session.admin.username
+  res.render('admin/add_product', { admin: true,adminData })
 
 })
 router.post('/add-product', verifyLogin, (req, res) => {
   
 
-
+  var adminData=req.session.admin.username
     productHelper.addProduct(req.body, (id) => {
       if(req.files){
       var image = req.files.image
@@ -43,7 +45,7 @@ router.post('/add-product', verifyLogin, (req, res) => {
           console.log(err);
         })}
         
-          res.render('admin/add_product', { admin: true })
+          res.render('admin/add_product', { admin: true ,adminData})
       
     })
   
@@ -56,9 +58,10 @@ router.get('/delete_product',verifyLogin,(req,res)=>{
 
  })
  router.get('/edit_product',verifyLogin,(req,res)=>{
+  var adminData=req.session.admin.username
    proId=req.query
    productHelper.getProdetail(proId).then((product)=>{
-    res.render('admin/edit_product',{product,admin:true})
+    res.render('admin/edit_product',{product,admin:true,adminData})
    })
  })
  router.post('/update-product',verifyLogin,(req,res)=>{
@@ -77,8 +80,9 @@ router.get('/delete_product',verifyLogin,(req,res)=>{
  })
 
  router.get('/orders-pending',verifyLogin,(req,res)=>{
+  var adminData=req.session.admin.username
   adminHelper.pendingDelivery().then((orders)=>{
-    res.render('admin/orders_list',{orders ,admin: true})
+    res.render('admin/orders_list',{orders ,admin: true,adminData})
     
   })
   
@@ -95,8 +99,9 @@ router.get('/product-shipped',verifyLogin,(req,res)=>{
   })
 })
 router.get('/orders-processing',verifyLogin,(req,res)=>{
+  var adminData=req.session.admin.username
   adminHelper.shippedProducts().then((orders)=>{
-    res.render('admin/orders_list',{orders,admin: true})
+    res.render('admin/orders_list',{orders,admin: true,adminData})
     
   })
   
@@ -112,8 +117,9 @@ router.get('/product-delivered',verifyLogin,(req,res)=>{
   })
 })
 router.get('/delivered-products',verifyLogin,(req,res)=>{
+  var adminData=req.session.admin.username
   adminHelper.deliveredProducts().then((orders)=>{
-    res.render('admin/orders_list',{orders,admin: true})
+    res.render('admin/orders_list',{orders,admin: true,adminData})
 
   })
 })
