@@ -115,7 +115,10 @@ $("#checkout-form").submit((e)=>{
         success:(response)=>{
             if(response.success)
             {
-                window.location='/cart'
+                $('#billing').hide();
+                $('#payment_failed').attr("hidden",true);
+                $('#successmsg').html(response.msg);
+                $('#successfull_page').removeAttr('hidden');
             }
             else{
                 //console.log(response.userName);

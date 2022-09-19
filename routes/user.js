@@ -161,7 +161,7 @@ router.post('/make-purchase',(req,res)=>{
       {
         
       console.log("order placed successfully");
-      res.json({success:true})
+      res.json({success:true,msg:"Order placed successfully"})
       }
       else if(req.body.payment_method==='Online'){
         userHelper.generateRazorpay(response.insertedId,req.body.Total).then((order)=>{
