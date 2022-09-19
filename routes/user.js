@@ -213,6 +213,18 @@ router.get('/orders',(req,res)=>{
 
 })
 
+router.post('/complete-payment',(req,res)=>{
+  console.log("here");
+  console.log(req.body);
+  userHelper.generateRazorpay(req.body.orderId,req.body.total).then((order)=>{
+    userName=req.session.user.Name
+    userEmail=req.session.user.Email
+    userMobile=req.body.phone
+    res.json({order,userName,userEmail,userMobile})
+
+  })
+})
+
 
 
 

@@ -131,10 +131,13 @@ module.exports = {
         return new Promise((resolve,reject)=>{
             db.get().collection(dbcollections.orderCollection).updateOne({_id:ObjectID(orderId)},{
                 $set:{
-                    status:"placed"
+                    Order_Status:"placed"
                 }
-            }).then(()=>{
+            }).then((res)=>{
+                //console.log(res);
                 resolve()
+            }).catch((err)=>{
+                console.log(err);
             })
         })
 

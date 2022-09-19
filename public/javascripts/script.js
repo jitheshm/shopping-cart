@@ -244,3 +244,23 @@ function productDelivery(orderId){
     })
     
     }
+
+    function completePayment(orderId,total,phone)
+    {
+        $.ajax({
+            url:'/complete-payment',
+            type:'post',
+            data:{
+                orderId,
+                total,
+                phone
+            },
+            success:(response)=>{
+                
+                    
+                    razorpayPayment(response);
+                
+               
+            }
+        })
+    }
